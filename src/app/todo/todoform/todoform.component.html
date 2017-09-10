@@ -1,0 +1,6 @@
+<form class="form-inline" (submit)="submit($event)">
+  <div class="form-group">
+    <input type="text" class="form-control" name="todoTitle" placeholder="todo title" [(ngModel)]="todoTitle">
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="!todoTitle.length"><span class="glyphicon glyphicon-plus-sign"></span> Add</button>
+</form>
