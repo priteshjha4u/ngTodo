@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+.mr10 {
+  margin-right: 10px
+}
+
+.ml10 {
+  margin-right: 10px
+}
+
+.cp {
+  cursor: pointer
+}
+
+.infobg {
+	background: #d9edf7;
+}
+
+.strk {
+	text-decoration: line-through;
+	background: #dff0d8;
+}
+
+body {
+    background: #ccc;
+}

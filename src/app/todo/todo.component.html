@@ -1,13 +1,14 @@
 <div class="col-md-12" style="margin-top: 25px;">
   <div class="panel panel-primary">
-    <div class="panel-heading">{{title}}
-      <span class="pull-right">Total: {{todos && todos.length}}</span>
+    <div class="panel-heading">{{appTitle}}
+      <span class="pull-right" style="margin-left: 20px;">Done: {{completed()}}</span>
+      <span class="pull-right">Total: {{todos.length}}</span>
     </div>
-    <div class="panel-body">
-      <todo-list></todo-list>
+    <div class="panel-body" style="max-height:400px;overflow:auto;">
+      <todo-list [data]="todos" (handler)="saveTodo($event)" ></todo-list>
     </div>
     <div className="panel-footer" style="text-align:center;margin-bottom:15px;">
-        <todo-form></todo-form>
+        <todo-form (submitHandler)="saveTodo($event)"></todo-form>
       </div>
   </div>
 </div>

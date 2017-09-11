@@ -1,4 +1,10 @@
-<ul class="list-group" *ngIf="todos && todos.length">
-  <li class="list-group-item">dfdf</li>
+<ul class="list-group todolist" *ngIf="todos.length">
+  <li class="list-group-item" *ngFor="let todo of todos; let index=index" (mouseenter)="mouseEnter(todo)" (mouseleave)="mouseLeave(todo)" [ngClass]="showControlsCheck(todo) && !todo.done ? 'infobg' : (todo.done ? 'strk' : '')" >
+    <span class="pull-left mr10"><strong>{{index+1}}.</strong></span>
+    <strong>{{todo.text}}</strong>
+    <span class="glyphicon glyphicon-trash pull-right" style="cursor:pointer;" *ngIf="showControlsCheck(todo,true)" (click)="update(todo,'del')"></span>
+    <span class="glyphicon glyphicon-ok pull-right mr10 cp" *ngIf="showControlsCheck(todo)" (click)="update(todo,'done')"></span>
+    <span class="glyphicon glyphicon-edit pull-right mr10 cp" *ngIf="showControlsCheck(todo)" (click)="update(todo,'edit')"></span>
+  </li>
 </ul>
 <div class="well" *ngIf="!todos.length">No todos found.</div>
