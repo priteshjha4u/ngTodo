@@ -10,42 +10,57 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 export class TodolistComponent {
   //todos: any[];
   showControls = [];
-  inlineEdit: boolean = false;
+  inlineEditRows = [];
   @Input('data') todos: Todotype[];
   @Output() handler = new EventEmitter<any>();
 
   mouseEnter(todo) {
-    this.showControls.push(todo.id);
+    let index = this.showControls.indexOf(todo.id);
+    index === -1 && this.showControls.push(todo.id);
   }
 
   mouseLeave(todo) {
     let index = this.showControls.indexOf(todo.id);
-    index > -1 && this.showControls.splice(index,1);
+    index > -1 && this.showControls.splice(index, 1);
   }
 
   showControlsCheck(todo, f = false) {
-    if(this.showControls.indexOf(todo.id) > -1 && f) {
+    if (this.showControls.indexOf(todo.id) > -1 && f) {
       return true
     }
     return this.showControls.indexOf(todo.id) > -1 && !todo.done
   }
 
-  update(todo,action = "") {
-    if(!action) {
+  update(todo, action = "") {
+    if (!action) {
       return false
     }
-    switch(action) {
+    switch (action) {
       case 'edit':
-        this.inlineEdit = true;
+        this.inlineEditRows.push(todo.id);
         break;
       case 'done':
-        this.handler.emit({item: Object.assign({},todo,{done: true}), action});
+        let index = this.showControls.indexOf(todo.id);
+        index > -1 && this.showControls.splice(index, 1);
+        this.handler.emit({ item: Object.assign({}, todo, { done: true }), action });
         break;
       case 'del':
-        this.inlineEdit = true;
+        this.handler.emit({ item: Object.assign({}, todo), action });
         break;
       default:
     }
+  }
+
+  checkEdit(todo) {
+    return this.inlineEditRows.indexOf(todo.id) > -1
+  }
+
+  submit(e, todo) {
+    e && e.preventDefault();
+    let index = this.inlineEditRows.indexOf(todo.id);
+    index > -1 && this.inlineEditRows.splice(index, 1);
+    index > -1 && this.showControls.splice(index, 1);
+    this.handler.emit({ item: Object.assign({}, todo), action:'editAction' });
   }
 
 }

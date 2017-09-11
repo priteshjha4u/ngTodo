@@ -29,7 +29,10 @@ export class TodoComponent implements OnInit {
   }
 
   saveTodo(data, update = false) {
-    data.action && data.action === 'done' && (update = true);
+    if(data.action && data.action === 'del') {
+      return this.removeTodo(data.item);
+    }
+    data.action && (data.action === 'done' || data.action === 'editAction') && (update = true);
     data.item && (data = data.item);
     try {
       let _data = {...data}, index;
@@ -41,11 +44,21 @@ export class TodoComponent implements OnInit {
       !update && this.todos.push(newTodo);
       if(update) {
         this.todos.forEach((t,i) => t.id === _data.id && (index = i));
-        this.todos[index] = _data;
+        index > -1 && (this.todos[index] = _data);
       }
       localStorage.setItem(this.lsPrefix, JSON.stringify(this.todos));
     } catch (e) {
       console.log(e)
+    }
+  }
+
+  removeTodo(todo) {
+    let confirmation = window.confirm('are you sure to delete : '+todo.text);
+    if(confirmation) {
+      let index;
+      this.todos.forEach((t,i) => t.id === todo.id && (index = i));
+      index > -1 && this.todos.splice(index,1);
+      localStorage.setItem(this.lsPrefix, JSON.stringify(this.todos));
     }
   }
 

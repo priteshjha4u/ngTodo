@@ -1,10 +1,22 @@
 <ul class="list-group todolist" *ngIf="todos.length">
-  <li class="list-group-item" *ngFor="let todo of todos; let index=index" (mouseenter)="mouseEnter(todo)" (mouseleave)="mouseLeave(todo)" [ngClass]="showControlsCheck(todo) && !todo.done ? 'infobg' : (todo.done ? 'strk' : '')" >
-    <span class="pull-left mr10"><strong>{{index+1}}.</strong></span>
-    <strong>{{todo.text}}</strong>
-    <span class="glyphicon glyphicon-trash pull-right" style="cursor:pointer;" *ngIf="showControlsCheck(todo,true)" (click)="update(todo,'del')"></span>
-    <span class="glyphicon glyphicon-ok pull-right mr10 cp" *ngIf="showControlsCheck(todo)" (click)="update(todo,'done')"></span>
-    <span class="glyphicon glyphicon-edit pull-right mr10 cp" *ngIf="showControlsCheck(todo)" (click)="update(todo,'edit')"></span>
+  <li class="list-group-item" *ngFor="let todo of todos; let index=index" (mouseenter)="mouseEnter(todo)" (mouseleave)="mouseLeave(todo)"
+    [ngClass]="showControlsCheck(todo) && !todo.done ? 'infobg' : (todo.done ? 'strk' : '')">
+    <div *ngIf="!checkEdit(todo)">
+      <span class="pull-left mr10"><strong>{{index+1}}.</strong></span>
+      <strong>{{todo.text}}</strong>
+      <span class="glyphicon glyphicon-trash pull-right" style="cursor:pointer;" *ngIf="showControlsCheck(todo,true)" (click)="update(todo,'del')"></span>
+      <span class="glyphicon glyphicon-ok pull-right mr10 cp" *ngIf="showControlsCheck(todo)" (click)="update(todo,'done')"></span>
+      <span class="glyphicon glyphicon-edit pull-right mr10 cp" *ngIf="showControlsCheck(todo)" (click)="update(todo,'edit')"></span>
+    </div>
+    <div *ngIf="checkEdit(todo)">
+      <form class="form-inline" (submit)="submit($event, todo)">
+        <div class="form-group">
+          <input type="text" class="form-control" name="text" [(ngModel)]="todo.text">
+        </div>
+        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span></button>
+        <button class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></button>
+      </form>
+    </div>
   </li>
 </ul>
 <div class="well" *ngIf="!todos.length">No todos found.</div>
