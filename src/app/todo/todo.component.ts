@@ -1,16 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-//import { TodoService } from './todo.service';
+import { TodoService, TodoListType } from './todo.service';
 
 @Component({
   selector: 'todo-app',
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.css'],
-  //providers: [TodoService]
+  providers: [TodoService]
 })
 export class TodoComponent implements OnInit {
   todos: Todotype[] = [];
   appTitle: string = 'Todo App';
   lsPrefix: string = 'todoAppStorage';
+  showDialog: boolean = false;
+
+  todoList: TodoListType[] = []
+
+  constructor(private todoService: TodoService) {
+    this.todoService.getTodos().subscribe(data => this.todoList = data);
+  }
 
   ngOnInit() {
     this.todos = this.getTodos()

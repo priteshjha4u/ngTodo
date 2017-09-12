@@ -1,14 +1,36 @@
-<div class="col-md-12" style="margin-top: 25px;">
+<div class="col-md-6" style="margin-top: 25px;">
   <div class="panel panel-primary">
     <div class="panel-heading">{{appTitle}}
       <span class="pull-right" style="margin-left: 20px;">Done: {{completed()}}</span>
       <span class="pull-right">Total: {{todos.length}}</span>
     </div>
     <div class="panel-body" style="max-height:400px;overflow:auto;">
-      <todo-list [data]="todos" (handler)="saveTodo($event)" ></todo-list>
+      <div class="ct mb10"><button class="btn btn-primary" (click)="showDialog = !showDialog" >Delete All</button></div>
+      <todo-list [data]="todos" (handler)="saveTodo($event)"></todo-list>
     </div>
     <div className="panel-footer" style="text-align:center;margin-bottom:15px;">
-        <todo-form (submitHandler)="saveTodo($event)"></todo-form>
-      </div>
+      <todo-form (submitHandler)="saveTodo($event)"></todo-form>
+    </div>
   </div>
 </div>
+
+<div class="col-md-6" style="margin-top: 25px;">
+  <div class="panel panel-primary">
+    <div class="panel-heading">TodoList from JSON placeholder API
+    </div>
+    <div class="panel-body" style="max-height:400px;overflow:auto;">
+      <div class="well" *ngIf="!todoList.length">Loading todo...</div>
+      <ul class="list-group" *ngIf="todoList.length">
+        <li class="list-group-item" *ngFor="let todo of todoList; let index=index">
+          {{todo.title}}
+          <span class="pull-right"><input type="checkbox" [checked]="todo.completed" /></span>
+        </li>
+      </ul>
+    </div>
+    <div className="panel-footer" style="text-align:center;margin-bottom:15px;">
+      <todo-form (submitHandler)="saveTodo($event)"></todo-form>
+    </div>
+  </div>
+</div>
+
+<app-dialog [show]="showDialog"></app-dialog>

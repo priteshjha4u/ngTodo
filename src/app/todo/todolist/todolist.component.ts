@@ -11,6 +11,7 @@ export class TodolistComponent {
   //todos: any[];
   showControls = [];
   inlineEditRows = [];
+  todoText: string = "";
   @Input('data') todos: Todotype[];
   @Output() handler = new EventEmitter<any>();
 
@@ -37,6 +38,7 @@ export class TodolistComponent {
     }
     switch (action) {
       case 'edit':
+        this.todoText = todo.text;
         this.inlineEditRows.push(todo.id);
         break;
       case 'done':
@@ -58,9 +60,18 @@ export class TodolistComponent {
   submit(e, todo) {
     e && e.preventDefault();
     let index = this.inlineEditRows.indexOf(todo.id);
+    let index2 = this.showControls.indexOf(todo.id);
     index > -1 && this.inlineEditRows.splice(index, 1);
-    index > -1 && this.showControls.splice(index, 1);
-    this.handler.emit({ item: Object.assign({}, todo), action:'editAction' });
+    index2 > -1 && this.showControls.splice(index, 1);
+    this.handler.emit({ item: Object.assign({}, todo, {text: this.todoText}), action:'editAction' });
+  }
+
+  cancelSubmit(e, todo) {
+    e && e.preventDefault();
+    let index = this.inlineEditRows.indexOf(todo.id);
+    let index2 = this.showControls.indexOf(todo.id);
+    index > -1 && this.inlineEditRows.splice(index, 1);
+    index2 > -1 && this.showControls.splice(index, 1);
   }
 
 }

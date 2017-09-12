@@ -11,10 +11,10 @@
     <div *ngIf="checkEdit(todo)">
       <form class="form-inline" (submit)="submit($event, todo)">
         <div class="form-group">
-          <input type="text" class="form-control" name="text" [(ngModel)]="todo.text">
+          <input type="text" class="form-control" name="todoText" [(ngModel)]="todoText">
         </div>
-        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span></button>
-        <button class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span></button>
+        <button type="submit" class="btn btn-primary" [disabled]="!todoText" ><span class="glyphicon glyphicon-ok"></span></button>
+        <button class="btn btn-primary" (click)="cancelSubmit($event, todo)" ><span class="glyphicon glyphicon-remove"></span></button>
       </form>
     </div>
   </li>
