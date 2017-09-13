@@ -1,14 +1,29 @@
-import { Component, Input,  } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.css']
 })
-export class DialogComponent {
+export class DialogComponent implements OnInit {
 
-  @Input('show') showFlag: boolean;
-  //@Output() valueEmitted = new EventEmitter<string>();
-  constructor() { }
+  @Input('show') showFlag: boolean
+  @Input() options: any
+  @Output() handler = new EventEmitter<any>();
+  constructor() {
+    //console.log('cons', this.options);
+   }
+
+  ngOnInit() {
+    //console.log('init', this.options);
+  }
+
+  close() {
+    this.handler.emit({action: 'close'});
+  }
+
+  success() {
+    this.handler.emit({action: 'success', cb: this.options._cb || null});
+  }
 
 }

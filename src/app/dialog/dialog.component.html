@@ -1,10 +1,19 @@
 <div class="app-modal" *ngIf="showFlag">
   <div class="app-modal-content">
-    <div class="panel panel-default">
-      <div class="panel-heading">Panel heading without title</div>
-      <div class="panel-body">
-        Panel content
+    <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="close()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{options.title}}</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{options.content}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="close()">{{options.closeText}}</button>
+        <button type="button" class="btn btn-success" (click)="success()">{{options.okText}}</button>
       </div>
     </div>
+  </div>
   </div>
 </div>

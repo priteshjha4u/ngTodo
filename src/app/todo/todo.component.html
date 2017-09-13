@@ -1,11 +1,16 @@
 <div class="col-md-6" style="margin-top: 25px;">
   <div class="panel panel-primary">
     <div class="panel-heading">{{appTitle}}
-      <span class="pull-right" style="margin-left: 20px;">Done: {{completed()}}</span>
-      <span class="pull-right">Total: {{todos.length}}</span>
+      <span class="pull-right" style="margin-left: 20px;">
+          Done: <span class="badge">{{completed()}}</span>
+      </span>
+      <span class="pull-right">Total: <span class="badge">{{todos.length}}</span></span>
     </div>
     <div class="panel-body" style="max-height:400px;overflow:auto;">
-      <div class="ct mb10"><button class="btn btn-primary" (click)="showDialog = !showDialog" >Delete All</button></div>
+      <div class="ct mb10" *ngIf="todos.length">
+        <button class="btn btn-xs btn-danger" (click)="deleteAll()" >Delete All</button>
+        <button class="btn btn-xs btn-success ml10" (click)="markAll()" >{{completed() < todos.length ? 'Mark all as done' : 'Mark all as not done'}}</button>
+      </div>
       <todo-list [data]="todos" (handler)="saveTodo($event)"></todo-list>
     </div>
     <div className="panel-footer" style="text-align:center;margin-bottom:15px;">
@@ -33,4 +38,4 @@
   </div>
 </div>
 
-<app-dialog [show]="showDialog"></app-dialog>
+<app-dialog [show]="showDialog" [options]="dialogOptions" (handler)="dialogHandler($event)"></app-dialog>

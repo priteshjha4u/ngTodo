@@ -12,6 +12,7 @@ export class TodoComponent implements OnInit {
   appTitle: string = 'Todo App';
   lsPrefix: string = 'todoAppStorage';
   showDialog: boolean = false;
+  dialogOptions = {};
 
   todoList: TodoListType[] = []
 
@@ -60,17 +61,62 @@ export class TodoComponent implements OnInit {
   }
 
   removeTodo(todo) {
-    let confirmation = window.confirm('are you sure to delete : '+todo.text);
-    if(confirmation) {
+    let remove = function() {
       let index;
       this.todos.forEach((t,i) => t.id === todo.id && (index = i));
       index > -1 && this.todos.splice(index,1);
-      localStorage.setItem(this.lsPrefix, JSON.stringify(this.todos));
+      this.dialogOptions = {};
+      this.showDialog = false;
+      localStorage.setItem(this.lsPrefix, JSON.stringify(this.todos)); 
+    }.bind(this);
+    this.dialogOptions = {
+      title: 'Confirmation!',
+      content: `Are you sure to delete "${todo.text}" ?`,
+      okText: 'Yes',
+      closeText: 'No',
+      _cb: remove
     }
+    this.showDialog = true;
   }
 
   completed() {
     return this.todos.filter(t => t.done === true).length
+  }
+
+  deleteAll() {
+    let del = function() {
+      this.todos = [];
+      this.dialogOptions = {};
+      this.showDialog = false;
+      localStorage.setItem(this.lsPrefix, JSON.stringify(this.todos));
+    }.bind(this);
+    this.dialogOptions = {
+      title: 'Confirmation!',
+      content: 'Are you sure to delete all todos ?',
+      okText: 'Yes',
+      closeText: 'No',
+     _cb: del
+    }
+    this.showDialog = true;
+  }
+
+  markAll() {
+    if (this.completed() < this.todos.length) {
+      this.todos.forEach(t => t.done = true)
+    } else {
+      this.todos.forEach(t => t.done = false)
+    }
+    localStorage.setItem(this.lsPrefix, JSON.stringify(this.todos));
+  }
+
+  dialogHandler(data) {
+    if(data && data.action === 'close') {
+      this.showDialog = false;
+      this.dialogOptions = {};
+    }
+    if(data && data.action === 'success') {
+      data.cb && data.cb()
+    }
   }
 
 }
