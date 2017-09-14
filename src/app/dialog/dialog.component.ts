@@ -9,7 +9,7 @@ export class DialogComponent implements OnInit {
 
   @Input('show') showFlag: boolean
   @Input() options: any
-  @Output() handler = new EventEmitter<any>();
+  //@Output() handler = new EventEmitter<any>();
   constructor() {
     //console.log('cons', this.options);
    }
@@ -18,12 +18,16 @@ export class DialogComponent implements OnInit {
     //console.log('init', this.options);
   }
 
-  close() {
+ /*  close() {
     this.handler.emit({action: 'close'});
-  }
+  } */
 
-  success() {
+ /*  success() {
     this.handler.emit({action: 'success', cb: this.options._cb || null});
+  } */
+
+  action(msg) {
+    this.options._cb && this.options._cb(msg)
   }
 
 }

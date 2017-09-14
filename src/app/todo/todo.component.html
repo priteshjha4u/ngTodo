@@ -1,4 +1,4 @@
-<div class="col-md-6" style="margin-top: 25px;">
+<div class="col-md-12" style="margin-top: 25px;">
   <div class="panel panel-primary">
     <div class="panel-heading">{{appTitle}}
       <span class="pull-right" style="margin-left: 20px;">
@@ -19,7 +19,7 @@
   </div>
 </div>
 
-<div class="col-md-6" style="margin-top: 25px;">
+<!-- <div class="col-md-6" style="margin-top: 25px;">
   <div class="panel panel-primary">
     <div class="panel-heading">TodoList from JSON placeholder API
     </div>
@@ -36,6 +36,6 @@
       <todo-form (submitHandler)="saveTodo($event)"></todo-form>
     </div>
   </div>
-</div>
+</div> -->
 
-<app-dialog [show]="showDialog" [options]="dialogOptions" (handler)="dialogHandler($event)"></app-dialog>
+<app-dialog [show]="showDialog" [options]="dialogOptions"></app-dialog>

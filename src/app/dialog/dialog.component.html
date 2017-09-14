@@ -3,15 +3,15 @@
     <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" aria-label="Close" (click)="close()"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" aria-label="Close" (click)="action('close')"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">{{options.title}}</h4>
       </div>
       <div class="modal-body">
         <p>{{options.content}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" (click)="close()">{{options.closeText}}</button>
-        <button type="button" class="btn btn-success" (click)="success()">{{options.okText}}</button>
+        <button type="button" class="btn btn-default" (click)="action('close')">{{options.closeText}}</button>
+        <button type="button" class="btn btn-success" (click)="action('success')">{{options.okText}}</button>
       </div>
     </div>
   </div>

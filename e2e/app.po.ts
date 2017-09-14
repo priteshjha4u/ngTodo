@@ -6,6 +6,12 @@ export class AppPage {
   }
 
   getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+    //console && console.log && console.log('value ---> ' + element(by.css('#tot')).getText())
+    return element(by.css('#tot')).getText();
+  }
+
+  getTitle() {
+    //console.log(browser.getTitle())
+    return browser.getTitle()
   }
 }
