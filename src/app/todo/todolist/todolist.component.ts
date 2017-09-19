@@ -11,7 +11,7 @@ export class TodolistComponent {
   //todos: any[];
   showControls = [];
   inlineEditRows = [];
-  todoText: string = "";
+  todoText: {[id: string] : string} = {};
   @Input('data') todos: Todotype[];
   @Output() handler = new EventEmitter<any>();
 
@@ -38,7 +38,7 @@ export class TodolistComponent {
     }
     switch (action) {
       case 'edit':
-        this.todoText = todo.text;
+        this.todoText[todo.id] = todo.text;
         this.inlineEditRows.push(todo.id);
         break;
       case 'done':
@@ -63,7 +63,7 @@ export class TodolistComponent {
     let index2 = this.showControls.indexOf(todo.id);
     index > -1 && this.inlineEditRows.splice(index, 1);
     index2 > -1 && this.showControls.splice(index, 1);
-    this.handler.emit({ item: Object.assign({}, todo, {text: this.todoText}), action:'editAction' });
+    this.handler.emit({ item: Object.assign({}, todo, {text: this.todoText[todo.id]}), action:'editAction' });
   }
 
   cancelSubmit(e, todo) {

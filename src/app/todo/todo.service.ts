@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map'; 
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import {Observable} from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch'; 
 
 
 @Injectable()
@@ -10,8 +12,9 @@ export class TodoService {
     console.log('Todo Service constructor call')
   }
 
-  getTodos() {
-    return this.http.get('https://jsonplaceholder.typicode.com/todos').map(res => res.json());
+  getTodos() /* () : Observable<Comment[]> */ {
+    return this.http.get('https://jsonplaceholder.typicode.com/todos').map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'Server error'))
   }
 
 }
