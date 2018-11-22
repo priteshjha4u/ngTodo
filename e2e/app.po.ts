@@ -10,6 +10,6 @@ export class AppPage {
   }
 
   getTitle() {
-    return browser.getTitle()
+    return browser.getTitle();
   }
 }

@@ -9,19 +9,19 @@ import { TodoService, TodoListType } from './todo.service';
 })
 export class TodoComponent implements OnInit {
   todos: Todotype[] = [];
-  appTitle: string = 'Todo App';
-  lsPrefix: string = 'todoAppStorage';
-  showDialog: boolean = false;
+  appTitle = 'Todo App';
+  lsPrefix = 'todoAppStorage';
+  showDialog = false;
   dialogOptions = {};
 
-  todoList: TodoListType[] = []
+  todoList: TodoListType[] = [];
 
   constructor(private todoService: TodoService) {
     this.todoService.getTodos().subscribe(data => this.todoList = data);
   }
 
   ngOnInit() {
-    this.todos = this.getTodos()
+    this.todos = this.getTodos();
   }
 
   random = () => '_' + Math.random().toString(36).substring(2);
@@ -29,10 +29,10 @@ export class TodoComponent implements OnInit {
 
   getTodos() {
     try {
-      let todos = JSON.parse(localStorage.getItem(this.lsPrefix));
-      return (todos || [])
+      const todos = JSON.parse(localStorage.getItem(this.lsPrefix));
+      return (todos || []);
     } catch (e) {
-      return []
+      return [];
     }
   }
 
@@ -43,8 +43,8 @@ export class TodoComponent implements OnInit {
     data.action && (data.action === 'done' || data.action === 'editAction') && (update = true);
     data.item && (data = data.item);
     try {
-      let _data = { ...data }, index;
-      let newTodo: Todotype = update ? null : {
+      const _data = { ...data }; let index;
+      const newTodo: Todotype = update ? null : {
         id: this.uuid(),
         text: _data.title,
         done: false
@@ -56,21 +56,21 @@ export class TodoComponent implements OnInit {
       }
       localStorage.setItem(this.lsPrefix, JSON.stringify(this.todos));
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   }
 
   removeTodo(todo) {
-    let remove = (action) => {
+    const remove = (action) => {
       if (action === 'close') {
-        return this.closeDialog()
+        return this.closeDialog();
       }
       let index;
       this.todos.forEach((t, i) => t.id === todo.id && (index = i));
       index > -1 && this.todos.splice(index, 1);
-      this.closeDialog()
+      this.closeDialog();
       localStorage.setItem(this.lsPrefix, JSON.stringify(this.todos));
-    }
+    };
 
     this.dialogOptions = {
       title: 'Confirmation!',
@@ -78,23 +78,23 @@ export class TodoComponent implements OnInit {
       okText: 'Yes',
       closeText: 'No',
       _cb: remove
-    }
+    };
     this.showDialog = true;
   }
 
   completed() {
-    return this.todos.filter(t => t.done === true).length
+    return this.todos.filter(t => t.done === true).length;
   }
 
   deleteAll() {
-    let del = (action) => {
+    const del = (action) => {
       if (action === 'close') {
-        return this.closeDialog()
+        return this.closeDialog();
       }
       this.todos = [];
-      this.closeDialog()
+      this.closeDialog();
       localStorage.setItem(this.lsPrefix, JSON.stringify(this.todos));
-    }
+    };
 
     this.dialogOptions = {
       title: 'Confirmation!',
@@ -102,15 +102,15 @@ export class TodoComponent implements OnInit {
       okText: 'Yes',
       closeText: 'No',
       _cb: del
-    }
+    };
     this.showDialog = true;
   }
 
   markAll() {
     if (this.completed() < this.todos.length) {
-      this.todos.forEach(t => t.done = true)
+      this.todos.forEach(t => t.done = true);
     } else {
-      this.todos.forEach(t => t.done = false)
+      this.todos.forEach(t => t.done = false);
     }
     localStorage.setItem(this.lsPrefix, JSON.stringify(this.todos));
   }
@@ -123,7 +123,7 @@ export class TodoComponent implements OnInit {
 }
 
 interface Todotype {
-  id: string,
-  text: string,
-  done: boolean
+  id: string;
+  text: string;
+  done: boolean;
 }

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dialog',
@@ -7,15 +7,15 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 })
 export class DialogComponent implements OnInit {
 
-  @Input('show') showFlag: boolean
-  @Input() options: any
-  //@Output() handler = new EventEmitter<any>();
+  @Input('show') show: boolean;
+  @Input() options: any;
+  // @Output() handler = new EventEmitter<any>();
   constructor() {
-    //console.log('cons', this.options);
+    // console.log('cons', this.options);
    }
 
   ngOnInit() {
-    //console.log('init', this.options);
+    // console.log('init', this.options);
   }
 
  /*  close() {
@@ -27,7 +27,7 @@ export class DialogComponent implements OnInit {
   } */
 
   action(msg) {
-    this.options._cb && this.options._cb(msg)
+    this.options._cb && this.options._cb(msg);
   }
 
 }
